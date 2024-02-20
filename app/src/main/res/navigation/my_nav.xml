@@ -20,10 +20,18 @@
         android:id="@+id/addExpenseFragment"
         android:name="com.example.williamderocco_assignment4_expensetracker.AddExpenseFragment"
         android:label="fragment_add_expense"
-        tools:layout="@layout/fragment_add_expense" />
+        tools:layout="@layout/fragment_add_expense" >
+        <action
+            android:id="@+id/action_addExpenseFragment_to_expenseListFragment"
+            app:destination="@id/expenseListFragment" />
+    </fragment>
     <fragment
         android:id="@+id/updateExpenseFragment"
         android:name="com.example.williamderocco_assignment4_expensetracker.UpdateExpenseFragment"
         android:label="fragment_update_expense"
-        tools:layout="@layout/fragment_update_expense" />
+        tools:layout="@layout/fragment_update_expense" >
+        <action
+            android:id="@+id/action_updateExpenseFragment_to_expenseListFragment"
+            app:destination="@id/expenseListFragment" />
+    </fragment>
 </navigation>

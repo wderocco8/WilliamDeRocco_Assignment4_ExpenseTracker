@@ -20,12 +20,33 @@
 
     <!-- Set amount TextView -->
     <TextView
+        android:id="@+id/set_name_text_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Set name"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/title_text_view"
+        android:padding="16dp"/>
+
+    <!-- Input to select amount -->
+    <EditText
+        android:id="@+id/name_edit_text"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:inputType="text"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/set_name_text_view"
+        app:layout_constraintTop_toTopOf="@id/set_name_text_view"
+        android:padding="16dp"/>
+
+    <!-- Set amount TextView -->
+    <TextView
         android:id="@+id/set_amount_text_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Set amount"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/title_text_view"
+        app:layout_constraintTop_toBottomOf="@id/name_edit_text"
         android:padding="16dp"/>
 
     <!-- Input to select amount -->

@@ -13,6 +13,8 @@ import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.core.widget.doOnTextChanged
+import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import com.example.williamderocco_assignment4_expensetracker.database.Expense
 import com.example.williamderocco_assignment4_expensetracker.databinding.FragmentAddExpenseBinding
 import java.util.Calendar
@@ -27,6 +29,9 @@ class AddExpenseFragment : Fragment() {
             "Cannot access binding because it is null. Is the view visible?"
         }
 
+    private val expenseListViewModel: ExpenseListViewModel by viewModels()
+
+    private var title: String = "" // Variable to hold the amount
     private var amount: Double = 0.0 // Variable to hold the amount
     private var category: String = "" // Variable to hold the category
     private var selectedDate: Long = 0 // Variable to hold the selected date in milliseconds
@@ -57,13 +62,25 @@ class AddExpenseFragment : Fragment() {
         setUpCategoryListener()
         setUpDateListener()
         setUpAddExpenseListener()
+        setUpNameListener()
 
+        // Set current date to date picker
+        val currentDate = Calendar.getInstance()
+        val year = currentDate.get(Calendar.YEAR)
+        val month = currentDate.get(Calendar.MONTH)
+        val day = currentDate.get(Calendar.DAY_OF_MONTH)
+        binding.datePicker.init(year, month, day, null)
+        selectedDate = currentDate.timeInMillis
     }
 
     private fun setUpAddExpenseListener() {
         // Set up listener for add expense button
         binding.addExpenseButton.setOnClickListener {
             // Validate inputs
+            if (title == "") {
+                Toast.makeText(requireContext(), "Please enter a valid name", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
             if (amount <= 0.0) {
                 Toast.makeText(requireContext(), "Please enter a valid amount", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
@@ -77,17 +94,11 @@ class AddExpenseFragment : Fragment() {
                 return@setOnClickListener
             }
 
-            // Create Expense object with the input values
-            val expense = Expense(
-                title = "Expense", // You can set a default title or get it from another source
-                amount = amount,
-                type = category,
-                date = Date(selectedDate)
-            )
+            Toast.makeText(requireContext(), "Succesfully added expense: " + title, Toast.LENGTH_SHORT).show()
+            // update database
+            expenseListViewModel.addExpense(title, amount, category, Date(selectedDate))
 
-            // Do something with the expense object, such as adding it to the database
-            // You can call a function in your ViewModel to handle this
-            // viewModel.addExpense(expense)
+            findNavController().navigate(com.example.williamderocco_assignment4_expensetracker.R.id.action_addExpenseFragment_to_expenseListFragment)
         }
     }
 
@@ -107,6 +118,12 @@ class AddExpenseFragment : Fragment() {
     private fun setUpAmountListener() {
         binding.amountEditText.doOnTextChanged { text, _, _, _ ->
             amount = text.toString().toDoubleOrNull() ?: 0.0
+        }
+    }
+
+    private fun setUpNameListener() {
+        binding.nameEditText.doOnTextChanged { text, _, _, _ ->
+            title = text.toString()
         }
     }
 
