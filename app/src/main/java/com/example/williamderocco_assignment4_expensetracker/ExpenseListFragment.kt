@@ -8,6 +8,7 @@ import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.williamderocco_assignment4_expensetracker.database.Expense
 import com.example.williamderocco_assignment4_expensetracker.databinding.FragmentExpenseListBinding
@@ -33,6 +34,14 @@ class ExpenseListFragment : Fragment(), ExpenseListAdapter.OnItemClickListener {
         binding.expenseRecyclerView.layoutManager = LinearLayoutManager(context)
         val adapter = ExpenseListAdapter(emptyList(), this) // pass in `this` as listener for ExpenseListAdapter (allows us to synchronize data when the expenseList updates)
         binding.expenseRecyclerView.adapter = adapter
+
+        // Find add expense button
+        val addButton = binding.addExpenseButton
+        // Set a click listener
+        addButton.setOnClickListener {
+            // Navigate to the AddExpenseFragment
+            findNavController().navigate(R.id.action_expenseListFragment_to_addExpenseFragment)
+        }
 
         // Initialize Spinner
         val categorySpinner = binding.categorySpinner

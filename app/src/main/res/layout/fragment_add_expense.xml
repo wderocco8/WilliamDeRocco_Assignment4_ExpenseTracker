@@ -1,9 +1,95 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".AddExpenseFragment">
 
+    <!-- Title -->
+    <TextView
+        android:id="@+id/title_text_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="New Expense"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:padding="16dp"/>
 
-</FrameLayout>
+    <!-- Set amount TextView -->
+    <TextView
+        android:id="@+id/set_amount_text_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Set amount"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/title_text_view"
+        android:padding="16dp"/>
+
+    <!-- Input to select amount -->
+    <EditText
+        android:id="@+id/amount_edit_text"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:inputType="numberDecimal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/set_amount_text_view"
+        app:layout_constraintTop_toTopOf="@id/set_amount_text_view"
+        android:padding="16dp"/>
+
+    <!-- Set category TextView -->
+    <TextView
+        android:id="@+id/set_category_text_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Select category"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/amount_edit_text"
+        android:padding="16dp"/>
+
+    <!-- Spinner to select category -->
+    <!-- Assuming you have defined a spinner with id category_spinner -->
+    <Spinner
+        android:id="@+id/category_spinner"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/set_category_text_view"
+        app:layout_constraintTop_toTopOf="@id/set_category_text_view"
+        android:padding="16dp"/>
+
+    <!-- Set category TextView -->
+    <TextView
+        android:id="@+id/date_picker_text_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Select date"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/category_spinner"
+        android:padding="16dp"/>
+
+    <!-- Standard DatePicker -->
+    <DatePicker
+        android:id="@+id/date_picker"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/date_picker_text_view"
+        android:padding="16dp"/>
+
+
+    <!-- Material3 button -->
+    <Button
+        android:id="@+id/add_expense_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Add Expense"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/date_picker"
+        android:padding="16dp"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
