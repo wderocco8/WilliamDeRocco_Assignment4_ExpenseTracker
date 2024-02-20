@@ -1,10 +1,10 @@
 package com.example.williamderocco_assignment4_expensetracker
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
+import com.example.williamderocco_assignment4_expensetracker.database.Expense
 import com.example.williamderocco_assignment4_expensetracker.databinding.ListItemExpenseBinding
 
 private const val TAG = "NewsListAdapter"

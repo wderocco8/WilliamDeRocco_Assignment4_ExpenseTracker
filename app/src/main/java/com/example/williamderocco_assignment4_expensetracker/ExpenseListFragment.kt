@@ -9,6 +9,7 @@ import android.widget.ArrayAdapter
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.williamderocco_assignment4_expensetracker.database.Expense
 import com.example.williamderocco_assignment4_expensetracker.databinding.FragmentExpenseListBinding
 
 class ExpenseListFragment : Fragment(), ExpenseListAdapter.OnItemClickListener {
