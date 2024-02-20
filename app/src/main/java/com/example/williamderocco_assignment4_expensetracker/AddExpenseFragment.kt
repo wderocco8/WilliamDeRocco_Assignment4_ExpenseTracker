@@ -52,20 +52,15 @@ class AddExpenseFragment : Fragment() {
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         binding.categorySpinner.adapter = adapter
 
-        // Set up listeners for amount EditText and category Spinner
+        // Set up listeners for amount EditText, category Spinner, date-picker, and add expense button
         setUpAmountListener()
         setUpCategoryListener()
+        setUpDateListener()
+        setUpAddExpenseListener()
 
-        // Set up listener for date picker
-        binding.datePicker.setOnDateChangedListener { _, year, monthOfYear, dayOfMonth ->
-            val calendar = Calendar.getInstance().apply {
-                set(Calendar.YEAR, year)
-                set(Calendar.MONTH, monthOfYear)
-                set(Calendar.DAY_OF_MONTH, dayOfMonth)
-            }
-            selectedDate = calendar.timeInMillis
-        }
+    }
 
+    private fun setUpAddExpenseListener() {
         // Set up listener for add expense button
         binding.addExpenseButton.setOnClickListener {
             // Validate inputs
@@ -93,6 +88,19 @@ class AddExpenseFragment : Fragment() {
             // Do something with the expense object, such as adding it to the database
             // You can call a function in your ViewModel to handle this
             // viewModel.addExpense(expense)
+        }
+    }
+
+    @RequiresApi(Build.VERSION_CODES.O)
+    private fun setUpDateListener() {
+        // Set up listener for date picker
+        binding.datePicker.setOnDateChangedListener { _, year, monthOfYear, dayOfMonth ->
+            val calendar = Calendar.getInstance().apply {
+                set(Calendar.YEAR, year)
+                set(Calendar.MONTH, monthOfYear)
+                set(Calendar.DAY_OF_MONTH, dayOfMonth)
+            }
+            selectedDate = calendar.timeInMillis
         }
     }
 
