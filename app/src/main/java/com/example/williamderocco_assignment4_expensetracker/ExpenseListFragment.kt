@@ -75,20 +75,20 @@ class ExpenseListFragment : Fragment(), ExpenseListAdapter.OnItemClickListener {
     }
 
     override fun onItemClick(expense: Expense) {
-        // TO-DO: figure out what to do when clicking on an expense
 
-//        val bundle = Bundle().apply {
-//            // Pass individual parameters
-//            putString("title", news.title)
-//            putString("description", news.description)
-//            putString("content", news.content)
-//            putString("imageUrl", news.imageUrl)
-//        }
-//        // Navigate to NewsDetailFragment using NavController
-//        findNavController().navigate(
-//            R.id.action_newsListFragment_to_fragmentNewsDetail,
-//            bundle
-//        )
+        val bundle = Bundle().apply {
+            // Pass individual parameters
+            putLong("id", expense.id)
+            putString("title", expense.title)
+            putString("amount", expense.amount.toString())
+            putString("category", expense.type)
+            putString("selectedDate", expense.date.toString())
+        }
+        // Navigate to NewsDetailFragment using NavController
+        findNavController().navigate(
+            R.id.action_expenseListFragment_to_updateExpenseFragment,
+            bundle
+        )
     }
 
 

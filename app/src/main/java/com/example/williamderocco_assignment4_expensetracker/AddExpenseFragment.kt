@@ -58,11 +58,12 @@ class AddExpenseFragment : Fragment() {
         binding.categorySpinner.adapter = adapter
 
         // Set up listeners for amount EditText, category Spinner, date-picker, and add expense button
+        setUpNameListener()
         setUpAmountListener()
         setUpCategoryListener()
         setUpDateListener()
         setUpAddExpenseListener()
-        setUpNameListener()
+        setCancelListener()
 
         // Set current date to date picker
         val currentDate = Calendar.getInstance()
@@ -136,6 +137,13 @@ class AddExpenseFragment : Fragment() {
             override fun onNothingSelected(parent: AdapterView<*>?) {
                 // Do nothing
             }
+        }
+    }
+
+    private fun setCancelListener() {
+        // Set up listener for cancel expense button
+        binding.cancelButton.setOnClickListener {
+            findNavController().navigate(com.example.williamderocco_assignment4_expensetracker.R.id.action_addExpenseFragment_to_expenseListFragment)
         }
     }
 
