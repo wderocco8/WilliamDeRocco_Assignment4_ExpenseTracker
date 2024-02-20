@@ -45,8 +45,11 @@ class ExpenseListFragment : Fragment(), ExpenseListAdapter.OnItemClickListener {
         categorySpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
                 val selectedCategory = categoryList[position]
-//                TO-DO: create Room and add functions to filter categories...
-//                expenseListViewModel.fetchNewsByCategory(selectedCategory)
+                if (selectedCategory == "All") {
+                    expenseListViewModel.fetchAllExpenses()
+                } else {
+                    expenseListViewModel.fetchExpensesByCategory(selectedCategory)
+                }
             }
 
             override fun onNothingSelected(parent: AdapterView<*>?) {
