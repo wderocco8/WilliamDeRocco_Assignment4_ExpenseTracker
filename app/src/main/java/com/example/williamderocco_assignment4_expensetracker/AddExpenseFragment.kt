@@ -1,5 +1,6 @@
 package com.example.williamderocco_assignment4_expensetracker
 
+import android.nfc.Tag
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
@@ -56,6 +57,22 @@ class AddExpenseFragment : Fragment() {
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         binding.categorySpinner.adapter = adapter
 
+        // Set current date to date picker
+        val currentDate = Calendar.getInstance()
+        val year = currentDate.get(Calendar.YEAR)
+        val month = currentDate.get(Calendar.MONTH)
+        val day = currentDate.get(Calendar.DAY_OF_MONTH)
+        binding.datePicker.init(year, month, day) { _, year, monthOfYear, dayOfMonth ->
+            val calendar = Calendar.getInstance().apply {
+                set(Calendar.YEAR, year)
+                set(Calendar.MONTH, monthOfYear)
+                set(Calendar.DAY_OF_MONTH, dayOfMonth)
+            }
+            selectedDate = calendar.timeInMillis
+            Log.d(TAG, "new date: $selectedDate")
+        }
+        selectedDate = currentDate.timeInMillis
+
         // Set up listeners for amount EditText, category Spinner, date-picker, and add expense button
         setUpNameListener()
         setUpAmountListener()
@@ -64,13 +81,13 @@ class AddExpenseFragment : Fragment() {
         setUpAddExpenseListener()
         setCancelListener()
 
-        // Set current date to date picker
-        val currentDate = Calendar.getInstance()
-        val year = currentDate.get(Calendar.YEAR)
-        val month = currentDate.get(Calendar.MONTH)
-        val day = currentDate.get(Calendar.DAY_OF_MONTH)
-        binding.datePicker.init(year, month, day, null)
-        selectedDate = currentDate.timeInMillis
+//        // Set current date to date picker
+//        val currentDate = Calendar.getInstance()
+//        val year = currentDate.get(Calendar.YEAR)
+//        val month = currentDate.get(Calendar.MONTH)
+//        val day = currentDate.get(Calendar.DAY_OF_MONTH)
+//        binding.datePicker.init(year, month, day, null)
+//        selectedDate = currentDate.timeInMillis
     }
 
     private fun setUpAddExpenseListener() {
@@ -85,8 +102,8 @@ class AddExpenseFragment : Fragment() {
                 Toast.makeText(requireContext(), "Please enter a valid amount", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
-            if (category.isEmpty()) {
-                Toast.makeText(requireContext(), "Please select a category", Toast.LENGTH_SHORT).show()
+            if (category.isEmpty() || category == "All") {
+                Toast.makeText(requireContext(), "Please select a valid category", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
             if (selectedDate == 0L) {
@@ -94,10 +111,9 @@ class AddExpenseFragment : Fragment() {
                 return@setOnClickListener
             }
 
+            // update database and redirect user
             Toast.makeText(requireContext(), "Succesfully added expense: " + title, Toast.LENGTH_SHORT).show()
-            // update database
             expenseListViewModel.addExpense(title, amount, category, Date(selectedDate))
-
             findNavController().navigate(com.example.williamderocco_assignment4_expensetracker.R.id.action_addExpenseFragment_to_expenseListFragment)
         }
     }
@@ -112,6 +128,7 @@ class AddExpenseFragment : Fragment() {
                 set(Calendar.DAY_OF_MONTH, dayOfMonth)
             }
             selectedDate = calendar.timeInMillis
+            Log.d(TAG, "new date: " + selectedDate)
         }
     }
 
