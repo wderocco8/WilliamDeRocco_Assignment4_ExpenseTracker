@@ -32,10 +32,10 @@ class UpdateExpenseFragment : Fragment() {
 
     private val expenseListViewModel: ExpenseListViewModel by viewModels()
 
-    private var title: String = "" // Variable to hold the amount
-    private var amount: Double = 0.0 // Variable to hold the amount
-    private var category: String = "" // Variable to hold the category
-    private var selectedDate: Long = 0 // Variable to hold the selected date in milliseconds
+    private var newTitle: String = "" // Variable to hold the amount
+    private var newAmount: Double = 0.0 // Variable to hold the amount
+    private var newCategory: String = "" // Variable to hold the category
+    private var newSelectedDate: Long = 0 // Variable to hold the selected date in milliseconds
 
 
     override fun onCreateView(
@@ -69,8 +69,11 @@ class UpdateExpenseFragment : Fragment() {
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         binding.categorySpinner.adapter = adapter
 
+        Log.d(TAG, "category: " + category)
         // Set spinner selection to category
         val categoryIndex = categoryList.indexOf(category)
+        Log.d(TAG, "category: " + categoryIndex)
+
         if (categoryIndex != -1) {
             binding.categorySpinner.setSelection(categoryIndex)
         }
