@@ -45,7 +45,7 @@ class ExpenseListFragment : Fragment(), ExpenseListAdapter.OnItemClickListener {
 
         // Initialize Spinner
         val categorySpinner = binding.categorySpinner
-        val categoryList = listOf("All", "Food", "Entertainment", "Housing", "Utilities", "Fuel", "Automotive", "Misc") // expense categories
+        val categoryList = resources.getStringArray(R.array.category_list).toList()
         val spinnerAdapter = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, categoryList)
         spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         categorySpinner.adapter = spinnerAdapter

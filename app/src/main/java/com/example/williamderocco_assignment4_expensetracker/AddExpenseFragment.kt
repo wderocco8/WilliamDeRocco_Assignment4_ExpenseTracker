@@ -1,6 +1,5 @@
 package com.example.williamderocco_assignment4_expensetracker
 
-import android.R
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
@@ -52,8 +51,8 @@ class AddExpenseFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         // Initialize category spinner
-        val categoryList = listOf("Food", "Entertainment", "Housing", "Utilities", "Fuel", "Automotive", "Misc")
-        val adapter = ArrayAdapter(requireContext(), R.layout.simple_spinner_item, categoryList)
+        val categoryList = resources.getStringArray(R.array.category_list).toList()
+        val adapter = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, categoryList)
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         binding.categorySpinner.adapter = adapter
 
