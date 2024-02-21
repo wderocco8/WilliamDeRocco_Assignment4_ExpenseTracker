@@ -31,11 +31,11 @@ class UpdateExpenseFragment : Fragment() {
         }
 
     private val expenseListViewModel: ExpenseListViewModel by viewModels()
-    private var id: Long? = null
-    private var title: String? = null
-    private var amount: Double? = null
-    private var category: String? = null
-    private var selectedDate: Long? = null
+    private var id: Long? = 0L
+    private var title: String? = ""
+    private var amount: Double? = 0.0
+    private var category: String? = ""
+    private var selectedDate: Long? = 0L
 
 
     override fun onCreateView(
@@ -85,9 +85,51 @@ class UpdateExpenseFragment : Fragment() {
             binding.datePicker.updateDate(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH))
         }
 
+        // Set up listeners for amount EditText, category Spinner, date-picker, and update expense button
+        setUpNameListener()
+        setUpAmountListener()
+        setUpCategoryListener()
+        setUpDateListener()
+        setUpUpdateExpenseListener()
         setCancelListener()
     }
 
+    private fun setUpUpdateExpenseListener() {
+        // Set up listener for add expense button
+        binding.addExpenseButton.setOnClickListener {
+            if (id == null) {
+                Toast.makeText(requireContext(), "Some wacky stuff went wrong :/", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
+            // Check if any of the inputs are null
+            if (title.isNullOrEmpty() || amount == null || category.isNullOrEmpty() || selectedDate == null) {
+                Toast.makeText(requireContext(), "Please fill in all fields", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
+            // Validate inputs
+            if (title == "") {
+                Toast.makeText(requireContext(), "Please enter a valid name", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
+            if (amount!! <= 0.0) {
+                Toast.makeText(requireContext(), "Please enter a valid amount", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
+            if (category!!.isEmpty() || category == "All") {
+                Toast.makeText(requireContext(), "Please select a valid category", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
+            if (selectedDate == 0L) {
+                Toast.makeText(requireContext(), "Please select a date", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
+
+            // update database and redirect user
+            Toast.makeText(requireContext(), "Succesfully updated expense: " + title, Toast.LENGTH_SHORT).show()
+            expenseListViewModel.updateExpense(id!!, title!!, amount!!, category!!, Date(selectedDate!!))
+            findNavController().navigate(R.id.action_updateExpenseFragment_to_expenseListFragment)
+        }
+    }
 
     @RequiresApi(Build.VERSION_CODES.O)
     private fun setUpDateListener() {

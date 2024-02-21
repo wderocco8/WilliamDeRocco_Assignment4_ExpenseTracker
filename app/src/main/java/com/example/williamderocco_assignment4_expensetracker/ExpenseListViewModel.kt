@@ -46,4 +46,24 @@ class ExpenseListViewModel(application: Application) : AndroidViewModel(applicat
         }
     }
 
+
+    fun updateExpense(id: Long, newTitle: String, newAmount: Double, newType: String, newDate: Date) {
+        viewModelScope.launch(Dispatchers.IO) {
+            // Retrieve the existing expense by its ID
+            val existingExpense = expenseDao.getExpenseById(id)
+
+            // Create a new Expense object with updated values
+            val updatedExpense = existingExpense.copy(
+                // id not needed (copied from original object)
+                title = newTitle,
+                amount = newAmount,
+                type = newType,
+                date = newDate
+            )
+
+            // Update the existing expense in the database
+            expenseDao.updateExpense(updatedExpense)
+        }
+    }
+
 }

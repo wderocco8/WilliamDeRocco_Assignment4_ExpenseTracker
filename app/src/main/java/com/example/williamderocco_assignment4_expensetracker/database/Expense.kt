@@ -8,7 +8,7 @@ import java.util.Date
 data class Expense(
     @PrimaryKey(autoGenerate = true)
     val id: Long = 0L,
-    val title: String,
+    var title: String,
     val amount: Double,
     val type: String,
     val date: Date
