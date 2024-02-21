@@ -46,7 +46,6 @@ class ExpenseListViewModel(application: Application) : AndroidViewModel(applicat
         }
     }
 
-
     fun updateExpense(id: Long, newTitle: String, newAmount: Double, newType: String, newDate: Date) {
         viewModelScope.launch(Dispatchers.IO) {
             // Retrieve the existing expense by its ID
@@ -66,4 +65,11 @@ class ExpenseListViewModel(application: Application) : AndroidViewModel(applicat
         }
     }
 
+    fun deleteAllExpenses() {
+        viewModelScope.launch(Dispatchers.IO) {
+            expenseDao.deleteAllExpenses()
+            // trigger UI update
+            fetchAllExpenses()
+        }
+    }
 }

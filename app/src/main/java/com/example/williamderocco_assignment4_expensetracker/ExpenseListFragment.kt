@@ -35,12 +35,17 @@ class ExpenseListFragment : Fragment(), ExpenseListAdapter.OnItemClickListener {
         val adapter = ExpenseListAdapter(emptyList(), this) // pass in `this` as listener for ExpenseListAdapter (allows us to synchronize data when the expenseList updates)
         binding.expenseRecyclerView.adapter = adapter
 
-        // Find add expense button
+        // Find add expense button and delete button
         val addButton = binding.addExpenseButton
+        val deleteButton = binding.deleteAllButton
         // Set a click listener
         addButton.setOnClickListener {
             // Navigate to the AddExpenseFragment
             findNavController().navigate(R.id.action_expenseListFragment_to_addExpenseFragment)
+        }
+        deleteButton.setOnClickListener {
+            // delete all expenses
+            expenseListViewModel.deleteAllExpenses()
         }
 
         // Initialize Spinner

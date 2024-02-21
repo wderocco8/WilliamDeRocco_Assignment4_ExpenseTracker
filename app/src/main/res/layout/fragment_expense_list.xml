@@ -15,14 +15,31 @@
         android:gravity="center"
         android:padding="16dp"/>
 
-    <!-- Button for adding expense -->
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/add_expense_button"
-        android:layout_width="wrap_content"
+    <!-- Horizontal LinearLayout for buttons -->
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:text="New Expense"
-        android:layout_marginTop="16dp"/>
+        android:orientation="horizontal"
+        android:gravity="center_horizontal">
+
+        <!-- Button for adding expense -->
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/add_expense_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="New Expense"
+            android:layout_marginTop="16dp"/>
+
+        <!-- Button for deleting all expenses -->
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/delete_all_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Delete All"
+            android:backgroundTint="#f25872"
+            android:layout_marginTop="16dp"
+            android:layout_marginStart="8dp"/>
+    </LinearLayout>
 
     <!-- Spinner for selecting categories -->
     <Spinner
