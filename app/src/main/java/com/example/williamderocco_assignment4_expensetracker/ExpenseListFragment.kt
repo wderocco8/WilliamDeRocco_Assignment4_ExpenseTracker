@@ -80,9 +80,9 @@ class ExpenseListFragment : Fragment(), ExpenseListAdapter.OnItemClickListener {
             // Pass individual parameters
             putLong("id", expense.id)
             putString("title", expense.title)
-            putString("amount", expense.amount.toString())
+            putDouble("amount", expense.amount)
             putString("category", expense.type)
-            putString("selectedDate", expense.date.toString())
+            putLong("selectedDate", expense.date.time)
         }
         // Navigate to NewsDetailFragment using NavController
         findNavController().navigate(

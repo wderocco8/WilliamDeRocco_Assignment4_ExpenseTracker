@@ -80,14 +80,6 @@ class AddExpenseFragment : Fragment() {
         setUpDateListener()
         setUpAddExpenseListener()
         setCancelListener()
-
-//        // Set current date to date picker
-//        val currentDate = Calendar.getInstance()
-//        val year = currentDate.get(Calendar.YEAR)
-//        val month = currentDate.get(Calendar.MONTH)
-//        val day = currentDate.get(Calendar.DAY_OF_MONTH)
-//        binding.datePicker.init(year, month, day, null)
-//        selectedDate = currentDate.timeInMillis
     }
 
     private fun setUpAddExpenseListener() {

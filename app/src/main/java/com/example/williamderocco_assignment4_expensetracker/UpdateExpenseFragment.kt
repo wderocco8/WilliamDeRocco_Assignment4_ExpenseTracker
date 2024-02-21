@@ -31,11 +31,11 @@ class UpdateExpenseFragment : Fragment() {
         }
 
     private val expenseListViewModel: ExpenseListViewModel by viewModels()
-
-    private var newTitle: String = "" // Variable to hold the amount
-    private var newAmount: Double = 0.0 // Variable to hold the amount
-    private var newCategory: String = "" // Variable to hold the category
-    private var newSelectedDate: Long = 0 // Variable to hold the selected date in milliseconds
+    private var id: Long? = null
+    private var title: String? = null
+    private var amount: Double? = null
+    private var category: String? = null
+    private var selectedDate: Long? = null
 
 
     override fun onCreateView(
@@ -48,20 +48,22 @@ class UpdateExpenseFragment : Fragment() {
         return binding.root
     }
 
+
+
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-
         // Retrieve individual parameters from arguments
-        val id = arguments?.getLong("id")
-        val title = arguments?.getString("title")
-        val amount = arguments?.getString("amount")
-        val category = arguments?.getString("category")
-        val selectedDate = arguments?.getString("selectedDate")
+        id = arguments?.getLong("id")
+        title = arguments?.getString("title")
+        amount = arguments?.getDouble("amount")
+        category = arguments?.getString("category")
+        selectedDate = arguments?.getLong("selectedDate")
 
+        // update the UI
         binding.nameEditText.hint = title
-        binding.amountEditText.hint = amount
+        binding.amountEditText.hint = amount.toString()
 
         // Initialize category spinner
         val categoryList = resources.getStringArray(R.array.category_list).toList()
@@ -69,19 +71,61 @@ class UpdateExpenseFragment : Fragment() {
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         binding.categorySpinner.adapter = adapter
 
-        Log.d(TAG, "category: " + category)
         // Set spinner selection to category
         val categoryIndex = categoryList.indexOf(category)
-        Log.d(TAG, "category: " + categoryIndex)
-
         if (categoryIndex != -1) {
             binding.categorySpinner.setSelection(categoryIndex)
+        }
+
+        // Set date to selectedDate
+        if (selectedDate != null) {
+            val calendar = Calendar.getInstance().apply {
+                timeInMillis = selectedDate!!
+            }
+            binding.datePicker.updateDate(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH))
         }
 
         setCancelListener()
     }
 
 
+    @RequiresApi(Build.VERSION_CODES.O)
+    private fun setUpDateListener() {
+        // Set up listener for date picker
+        binding.datePicker.setOnDateChangedListener { _, year, monthOfYear, dayOfMonth ->
+            val calendar = Calendar.getInstance().apply {
+                set(Calendar.YEAR, year)
+                set(Calendar.MONTH, monthOfYear)
+                set(Calendar.DAY_OF_MONTH, dayOfMonth)
+            }
+            selectedDate = calendar.timeInMillis
+            Log.d(TAG, "new date: " + selectedDate)
+        }
+    }
+
+    private fun setUpAmountListener() {
+        binding.amountEditText.doOnTextChanged { text, _, _, _ ->
+            amount = text.toString().toDoubleOrNull() ?: 0.0
+        }
+    }
+
+    private fun setUpNameListener() {
+        binding.nameEditText.doOnTextChanged { text, _, _, _ ->
+            title = text.toString()
+        }
+    }
+
+    private fun setUpCategoryListener() {
+        binding.categorySpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                category = parent?.getItemAtPosition(position).toString()
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+                // Do nothing
+            }
+        }
+    }
 
     private fun setCancelListener() {
         // Set up listener for cancel expense button
